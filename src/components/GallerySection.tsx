@@ -4,20 +4,20 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const galleryItems = [
-  { src: "/Galleries/Gallery_P1.jpg", type: "portrait" },
-  { src: "/Galleries/Gallery_P2.jpg", type: "portrait" },
-  { src: "/Galleries/Gallery_L1.jpg", type: "landscape" },
-  { src: "/Galleries/Gallery_P3.jpg", type: "portrait" },
-  { src: "/Galleries/Gallery_P4.jpg", type: "portrait" },
-  { src: "/Galleries/Gallery_P5.jpg", type: "portrait" },
-  { src: "/Galleries/Gallery_P6.jpg", type: "portrait" },
-  { src: "/Galleries/Gallery_L2.jpg", type: "landscape" },
-  { src: "/Galleries/Gallery_P7.jpg", type: "portrait" },
-  { src: "/Galleries/Gallery_P8.jpg", type: "portrait" },
-  { src: "/Galleries/Gallery_P9.jpg", type: "portrait" },
-  { src: "/Galleries/Gallery_P10.jpg", type: "portrait" },
-  { src: "/Galleries/Gallery_P11.jpg", type: "portrait" },
-  { src: "/Galleries/Gallery_P12.jpg", type: "portrait" },
+  { src: "/Galleries/Gallery_P1.webp", type: "portrait" },
+  { src: "/Galleries/Gallery_P2.webp", type: "portrait" },
+  { src: "/Galleries/Gallery_L1.webp", type: "landscape" },
+  { src: "/Galleries/Gallery_P3.webp", type: "portrait" },
+  { src: "/Galleries/Gallery_P4.webp", type: "portrait" },
+  { src: "/Galleries/Gallery_P5.webp", type: "portrait" },
+  { src: "/Galleries/Gallery_P6.webp", type: "portrait" },
+  { src: "/Galleries/Gallery_L2.webp", type: "landscape" },
+  { src: "/Galleries/Gallery_P7.webp", type: "portrait" },
+  { src: "/Galleries/Gallery_P8.webp", type: "portrait" },
+  { src: "/Galleries/Gallery_P9.webp", type: "portrait" },
+  { src: "/Galleries/Gallery_P10.webp", type: "portrait" },
+  { src: "/Galleries/Gallery_P11.webp", type: "portrait" },
+  { src: "/Galleries/Gallery_P12.webp", type: "portrait" },
 ] as const;
 
 export function GallerySection() {

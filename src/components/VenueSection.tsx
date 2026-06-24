@@ -22,7 +22,7 @@ export function VenueSection() {
       <div className="mx-auto grid max-w-[1290px] gap-12 md:grid-cols-[0.95fr_1fr] md:items-center md:gap-20">
         <div className="mx-auto w-full max-w-[565px] bg-white">
           <Image
-            src="/Venue Main Image.png"
+            src="/Venue Main Image.webp"
             alt="Marsoeta Coffee & Eatery"
             width={1085}
             height={1450}

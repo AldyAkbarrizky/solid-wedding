@@ -4,7 +4,7 @@ export function ClosingSection() {
   return (
     <footer className="relative isolate flex min-h-[100svh] overflow-hidden bg-black text-center text-white">
       <Image
-        src="/Footer.jpg"
+        src="/Footer.webp"
         alt="Afdal dan Putri berjalan di antara pepohonan tepi danau"
         fill
         sizes="100vw"

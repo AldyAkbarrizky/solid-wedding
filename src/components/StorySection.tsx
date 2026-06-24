@@ -10,14 +10,14 @@ const chapters = [
     title: "Bagaimana Kami Bertemu",
     body: "Berawal dari organisasi BEM Polban, kami sering berkoordinasi dan bertukar cerita hingga rasa nyaman tumbuh di tengah masa pandemi. Tanpa kami sadari, percakapan sederhana itu menjadi awal dari perjalanan yang jauh lebih panjang.",
     gradient: "from-[#ecdcc0] to-[#a08060]",
-    images: ["/Stories/Chapter1.png"],
+    images: ["/Stories/Chapter1.webp"],
   },
   {
     label: "chapter two (2021 - 2023)",
     title: "Bertumbuh Bersama",
     body: "Kuliah, tugas, organisasi, dan banyak cerita menjadi bagian dari perjalanan kami. Di masa ini kami menikmati kebersamaan sambil belajar memahami, mendukung, dan bertumbuh menjadi pribadi yang lebih dewasa.",
     gradient: "from-[#d8d0e4] to-[#908098]",
-    images: ["/Stories/Chapter2.png"],
+    images: ["/Stories/Chapter2.webp"],
   },
   {
     label: "chapter three (2023 - 2026)",
@@ -25,10 +25,10 @@ const chapters = [
     body: "Memasuki dunia kerja, kami menemukan kebahagiaan dalam perjalanan-perjalanan sederhana ke berbagai tempat dan alam yang indah. Dari setiap perjalanan, kami belajar untuk saling memahami, menguatkan, dan menikmati setiap proses kehidupan bersama.",
     gradient: "from-[#d4e8d4] to-[#88a880]",
     images: [
-      "/Stories/Chapter3_a.png",
-      "/Stories/Chapter3_b.png",
-      "/Stories/Chapter3_c.png",
-      "/Stories/Chapter3_d.png",
+      "/Stories/Chapter3_a.webp",
+      "/Stories/Chapter3_b.webp",
+      "/Stories/Chapter3_c.webp",
+      "/Stories/Chapter3_d.webp",
     ],
   },
   {
@@ -36,14 +36,14 @@ const chapters = [
     title: "Lamaran",
     body: "Dengan restu Allah SWT dan kedua keluarga, kami memutuskan membawa hubungan ini ke jenjang yang lebih serius. Hari itu menjadi awal pertemuan dua keluarga yang dipersatukan oleh niat baik dan harapan yang sama.",
     gradient: "from-[#d4e8d4] to-[#88a880]",
-    images: ["/Stories/Chapter4.png"],
+    images: ["/Stories/Chapter4.webp"],
   },
   {
     label: "last chapter",
     title: "Hari Bahagia",
     body: "Dengan penuh rasa syukur, kami memutuskan untuk mengikat janji suci pernikahan dan memulai babak baru kehidupan bersama. Semoga langkah ini menjadi awal dari perjalanan panjang yang penuh cinta, keberkahan, dan kebahagiaan.",
     gradient: "from-[#d4e8d4] to-[#88a880]",
-    images: ["/Stories/Chapter5_Fix.png"],
+    images: ["/Stories/Chapter5_Fix.webp"],
   },
 ];
 

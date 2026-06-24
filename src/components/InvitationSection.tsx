@@ -13,7 +13,7 @@ const profiles = [
     name: "Putri Andiyani A.Md.Si",
     description: "Putri pertama dari Bapak Dicky Mulyadi dan Ibu Aan Samsinar",
     handle: "putriandiy",
-    image: "/Putri.jpg",
+    image: "/Putri.webp",
     imageAlt: "Putri Andiyani",
     position: "center 100%",
   },
@@ -21,7 +21,7 @@ const profiles = [
     name: "Afdal Ramdan Daman Huri S.Tr.Kom",
     description: "Putra pertama dari Bapak Amrizal dan Ibu Nelda Warni",
     handle: "afdalrdh",
-    image: "/Afdal.jpg",
+    image: "/Afdal.webp",
     imageAlt: "Afdal Ramdan Daman Huri",
     position: "center 100%",
   },
@@ -95,7 +95,7 @@ export function InvitationSection() {
                 className="group absolute inset-0 cursor-pointer"
               >
                 <Image
-                  src="/Thumbnail Video.jpg"
+                  src="/Thumbnail Video.webp"
                   alt="Thumbnail video"
                   fill
                   sizes="(min-width: 768px) 520px, 100vw"

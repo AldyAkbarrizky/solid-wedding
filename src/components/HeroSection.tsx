@@ -23,7 +23,7 @@ export function HeroSection() {
       className="relative isolate h-[100svh] min-h-[700px] overflow-hidden bg-neutral-950 text-white"
     >
       <Image
-        src="/Hero Background.png"
+        src="/Hero Background.webp"
         alt="Afdal dan Putri berdiri di tepi danau"
         fill
         priority

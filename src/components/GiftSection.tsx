@@ -225,7 +225,7 @@ export function GiftSection() {
           <article className="overflow-hidden rounded-[18px] border border-white/25 bg-[#fff7ef] text-[#6d625f] shadow-[0_20px_45px_rgba(0,0,0,0.22)]">
             <div className="px-6 pt-6 md:px-8 md:pt-7 lg:px-8 lg:pt-6">
               <Image
-                src="/Hadiah.png"
+                src="/Hadiah.webp"
                 alt="Ilustrasi hadiah untuk pengiriman ke rumah"
                 width={1402}
                 height={1122}
