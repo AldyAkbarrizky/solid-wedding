@@ -22,15 +22,15 @@ export function ScrollFillText({ text }: ScrollFillTextProps) {
   );
 
   return (
-    <div ref={ref} className="relative mx-auto max-w-5xl py-32">
-      <p className="font-serif text-5xl leading-tight text-neutral-300 md:text-8xl">
+    <div ref={ref} className="relative mx-auto py-32 text-center">
+      <p className="font-serif text-3xl leading-relaxed italic font-normal text-[#4A0E0E]/30 md:text-5xl">
         {text}
       </p>
 
       <motion.p
         aria-hidden
         style={{ clipPath }}
-        className="absolute left-0 top-32 font-serif text-5xl leading-tight text-neutral-950 md:text-8xl"
+        className="absolute inset-x-0 top-32 font-serif text-3xl leading-relaxed italic font-normal text-[#4A0E0E] md:text-5xl"
       >
         {text}
       </motion.p>

@@ -1,136 +1,271 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "motion/react";
-import { useRef } from "react";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 
 const galleryItems = [
-  {
-    caption: "First year on campus",
-    gradient: "from-[#e0d8c8] to-[#c0a870]",
-    tall: true,
-  },
-  {
-    caption: "Coffee between classes",
-    gradient: "from-[#d8d0e8] to-[#9088b8]",
-    tall: false,
-  },
-  {
-    caption: "The start of everything",
-    gradient: "from-[#d4e4d8] to-[#80a888]",
-    tall: true,
-  },
-  {
-    caption: "A favorite city corner",
-    gradient: "from-[#e8d8cc] to-[#b09078]",
-    tall: false,
-  },
-  {
-    caption: "Weekends downtown",
-    gradient: "from-[#ccd8e8] to-[#7898b0]",
-    tall: true,
-  },
-  {
-    caption: "Our everyday ritual",
-    gradient: "from-[#e8e0c8] to-[#c0b070]",
-    tall: false,
-  },
-  {
-    caption: "The weekend away",
-    gradient: "from-[#d8d8e0] to-[#9898a8]",
-    tall: true,
-  },
-  {
-    caption: "Right after yes",
-    gradient: "from-[#dce4d8] to-[#90a888]",
-    tall: false,
-  },
-  {
-    caption: "Celebrating together",
-    gradient: "from-[#e4dcd0] to-[#b0988c]",
-    tall: true,
-  },
-];
+  { src: "/Galleries/Gallery_P1.jpg", type: "portrait" },
+  { src: "/Galleries/Gallery_P2.jpg", type: "portrait" },
+  { src: "/Galleries/Gallery_L1.jpg", type: "landscape" },
+  { src: "/Galleries/Gallery_P3.jpg", type: "portrait" },
+  { src: "/Galleries/Gallery_P4.jpg", type: "portrait" },
+  { src: "/Galleries/Gallery_P5.jpg", type: "portrait" },
+  { src: "/Galleries/Gallery_P6.jpg", type: "portrait" },
+  { src: "/Galleries/Gallery_L2.jpg", type: "landscape" },
+  { src: "/Galleries/Gallery_P7.jpg", type: "portrait" },
+  { src: "/Galleries/Gallery_P8.jpg", type: "portrait" },
+  { src: "/Galleries/Gallery_P9.jpg", type: "portrait" },
+  { src: "/Galleries/Gallery_P10.jpg", type: "portrait" },
+  { src: "/Galleries/Gallery_P11.jpg", type: "portrait" },
+  { src: "/Galleries/Gallery_P12.jpg", type: "portrait" },
+] as const;
 
 export function GallerySection() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const constraintsRef = useRef<HTMLDivElement>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const selectedItem =
+    selectedIndex === null ? null : galleryItems[selectedIndex];
 
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  });
+  const closeGallery = () => setSelectedIndex(null);
+  const showPrevious = () =>
+    setSelectedIndex((currentIndex) =>
+      currentIndex === null
+        ? null
+        : (currentIndex - 1 + galleryItems.length) % galleryItems.length,
+    );
+  const showNext = () =>
+    setSelectedIndex((currentIndex) =>
+      currentIndex === null ? null : (currentIndex + 1) % galleryItems.length,
+    );
 
-  const headerY = useTransform(scrollYProgress, [0, 1], [30, -30]);
+  useEffect(() => {
+    if (selectedIndex === null) {
+      return;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeGallery();
+      }
+
+      if (event.key === "ArrowLeft") {
+        showPrevious();
+      }
+
+      if (event.key === "ArrowRight") {
+        showNext();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [selectedIndex]);
 
   return (
-    <section ref={sectionRef} className="overflow-hidden bg-[#f5f0e8] py-32">
-      {/* Header */}
-      <motion.div style={{ y: headerY }} className="mb-16 px-6 md:px-16">
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="mb-4 text-[11px] uppercase tracking-[0.45em] text-neutral-400"
-        >
-          memories
-        </motion.p>
-        <motion.h2
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.08 }}
-          className="font-serif text-6xl italic md:text-8xl"
-        >
-          little moments
-        </motion.h2>
-      </motion.div>
+    <section
+      id="memories"
+      className="bg-white pb-20 pt-12 text-center md:px-8 md:py-24"
+    >
+      <div className="mx-auto w-[354px] max-w-[calc(100vw-36px)] md:w-full md:max-w-[1000px]">
+        <p className="font-sans text-[13px] font-normal uppercase leading-[20px] tracking-[1.8px] text-[#877270] md:text-[14px] md:tracking-[2px]">
+          Our Memories
+        </p>
 
-      {/* Drag carousel */}
-      <div ref={constraintsRef} className="overflow-hidden">
-        <motion.div
-          drag="x"
-          dragConstraints={constraintsRef}
-          dragElastic={0.05}
-          className="flex cursor-grab select-none gap-5 px-6 active:cursor-grabbing md:px-16"
-          style={{ width: "max-content" }}
-        >
-          {galleryItems.map((item, i) => (
-            <motion.figure
-              key={item.caption}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.1 }}
-              transition={{
-                duration: 0.75,
-                delay: i * 0.06,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              className="shrink-0"
-            >
-              <div
-                className={`w-52 overflow-hidden rounded-3xl bg-linear-to-b md:w-64 ${item.gradient} ${
-                  item.tall ? "h-80 md:h-96" : "h-60 md:h-72"
-                }`}
-              />
-              <figcaption className="mt-3 text-[10px] uppercase tracking-[0.28em] text-neutral-400">
-                {item.caption}
-              </figcaption>
-            </motion.figure>
-          ))}
-        </motion.div>
+        <h2 className="mx-auto mt-6 max-w-[340px] text-left font-serif text-[34px] font-semibold leading-[1.18] tracking-normal text-[#4A0E0E] md:max-w-none md:text-center md:text-[48px] md:leading-none">
+          Kenangan yang kami abadikan.
+        </h2>
+
+        <div className="mx-auto mt-6 h-px w-12 bg-[#877270] md:mt-8" />
+
+        <div className="mt-9 grid grid-cols-2 gap-[8.84px] md:mt-12 md:grid-cols-[repeat(4,241px)] md:gap-3">
+          {galleryItems.map((item, index) => {
+            const isLandscape = item.type === "landscape";
+
+            return (
+              <button
+                key={item.src}
+                type="button"
+                onClick={() => setSelectedIndex(index)}
+                aria-label={`Perbesar memori Afdal dan Putri ${index + 1}`}
+                className={
+                  isLandscape
+                    ? "group relative col-span-2 h-[215.14px] w-full cursor-zoom-in overflow-hidden transition duration-500 ease-out hover:scale-[1.015] focus-visible:scale-[1.015] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:h-[292px]"
+                    : "group relative h-[215.14px] w-full cursor-zoom-in overflow-hidden transition duration-500 ease-out hover:scale-[1.015] focus-visible:scale-[1.015] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:h-[292px]"
+                }
+              >
+                <Image
+                  src={item.src}
+                  alt={`Memori Afdal dan Putri ${index + 1}`}
+                  fill
+                  sizes={
+                    isLandscape
+                      ? "(min-width: 768px) 494px, calc(100vw - 48px)"
+                      : "(min-width: 768px) 241px, calc((100vw - 54px) / 2)"
+                  }
+                  className="object-cover transition duration-500 ease-out group-hover:scale-105"
+                />
+                <span className="pointer-events-none absolute inset-0 bg-black/0 transition duration-500 group-hover:bg-black/20" />
+              </button>
+            );
+          })}
+        </div>
       </div>
 
-      {/* Drag hint */}
-      <motion.p
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.4, duration: 0.8 }}
-        className="mt-8 px-6 text-[10px] uppercase tracking-[0.35em] text-neutral-300 md:px-16"
-      >
-        drag to explore →
-      </motion.p>
+      {selectedItem && selectedIndex !== null && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Galeri foto Afdal dan Putri"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/92 px-4 py-8 backdrop-blur-sm"
+          onClick={closeGallery}
+        >
+          <button
+            type="button"
+            aria-label="Tutup galeri"
+            onClick={closeGallery}
+            className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white transition hover:bg-white/20"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden
+            >
+              <path
+                d="M6 6L18 18M18 6L6 18"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+            </svg>
+          </button>
+
+          <button
+            type="button"
+            aria-label="Foto sebelumnya"
+            onClick={(event) => {
+              event.stopPropagation();
+              showPrevious();
+            }}
+            className="absolute left-3 top-1/2 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white transition hover:bg-white/20 md:flex"
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden
+            >
+              <path
+                d="M15 5L8 12L15 19"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+
+          <div
+            className="relative h-[80svh] w-[min(92vw,1120px)]"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <Image
+              src={selectedItem.src}
+              alt={`Memori Afdal dan Putri ${selectedIndex + 1}`}
+              fill
+              sizes="92vw"
+              className="object-contain"
+            />
+          </div>
+
+          <button
+            type="button"
+            aria-label="Foto berikutnya"
+            onClick={(event) => {
+              event.stopPropagation();
+              showNext();
+            }}
+            className="absolute right-3 top-1/2 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white transition hover:bg-white/20 md:flex"
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden
+            >
+              <path
+                d="M9 5L16 12L9 19"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+
+          <div className="absolute bottom-5 left-1/2 flex -translate-x-1/2 gap-3 md:hidden">
+            <button
+              type="button"
+              aria-label="Foto sebelumnya"
+              onClick={(event) => {
+                event.stopPropagation();
+                showPrevious();
+              }}
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white"
+            >
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden
+              >
+                <path
+                  d="M15 5L8 12L15 19"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+            <button
+              type="button"
+              aria-label="Foto berikutnya"
+              onClick={(event) => {
+                event.stopPropagation();
+                showNext();
+              }}
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white"
+            >
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden
+              >
+                <path
+                  d="M9 5L16 12L9 19"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

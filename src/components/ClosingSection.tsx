@@ -1,58 +1,49 @@
-"use client";
-
-import { motion } from "motion/react";
+import Image from "next/image";
 
 export function ClosingSection() {
   return (
-    <section className="relative overflow-hidden bg-[#1c1a17] px-6 py-40 text-center md:px-16">
-      {/* Subtle warm glow */}
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          backgroundImage:
-            "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(180,140,90,0.12) 0%, transparent 65%)",
-        }}
+    <footer className="relative isolate flex min-h-[100svh] overflow-hidden bg-black text-center text-white">
+      <Image
+        src="/Footer.jpg"
+        alt="Afdal dan Putri berjalan di antara pepohonan tepi danau"
+        fill
+        sizes="100vw"
+        className="absolute inset-0 z-0 object-cover object-[50%_center]"
       />
+      <div className="absolute inset-0 z-10 bg-black/58" />
+      <div className="absolute inset-0 z-10 bg-linear-to-b from-black/20 via-transparent to-black/25" />
 
-      <div className="relative mx-auto max-w-3xl">
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="mb-12 text-[10px] uppercase tracking-[0.5em] text-neutral-500"
-        >
-          Jim &amp; Pam · June 18, 2027
-        </motion.p>
+      <div className="relative z-20 flex min-h-[100svh] w-full flex-col items-center justify-center px-5 pb-28 pt-20 md:px-16 md:pb-28 md:pt-24">
+        <p className="font-sans text-[14px] font-normal uppercase leading-[20px] tracking-[3px] text-white/75 md:text-[15px] md:tracking-[3.4px]">
+          See You On Our Big Day
+        </p>
 
-        <motion.blockquote
-          initial={{ opacity: 0, y: 32 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 1.1, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-          className="font-serif text-4xl italic leading-relaxed text-[#f5f0e8] md:text-6xl"
-        >
-          &ldquo;you&apos;re my favorite person to do anything with for the rest of my life.&rdquo;
-        </motion.blockquote>
+        <p className="mt-9 max-w-[350px] font-serif text-[23px] font-normal italic leading-[1.42] tracking-normal text-white md:mt-10 md:max-w-[1220px] md:text-[42px] md:leading-[1.32] lg:text-[44px]">
+          Merupakan suatu kebahagiaan dan kehormatan bagi kami, apabila
+          Bapak/Ibu/Saudara/i, berkenan hadir dan memberikan do&apos;a restu
+          kepada kami
+        </p>
 
-        <motion.div
-          initial={{ scaleX: 0, opacity: 0 }}
-          whileInView={{ scaleX: 1, opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="mx-auto mt-16 h-px w-20 origin-center bg-neutral-700"
-        />
+        <div className="mt-10 h-20 w-px bg-white/85 md:mt-12" />
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.9 }}
-          className="mt-8 text-[10px] uppercase tracking-[0.4em] text-neutral-600"
-        >
-          Vancouver, BC · Cecil Green Park House
-        </motion.p>
+        <p className="mt-10 font-display text-[58px] font-normal uppercase leading-none tracking-normal text-white md:mt-12 md:text-[72px] lg:text-[76px]">
+          Afdal &amp; Putri
+        </p>
       </div>
-    </section>
+
+      <div className="absolute inset-x-0 bottom-0 z-30 flex h-[70px] items-center justify-center border-t border-white/35 px-6 md:h-[72px]">
+        <p className="font-sans text-[18px] font-normal leading-[26px] tracking-normal text-white md:text-[19px]">
+          Made With <span className="px-2 text-[22px] leading-none">♥</span>
+          <a
+            href="https://solidtechno.id"
+            target="_blank"
+            rel="noreferrer"
+            className="underline-offset-4 hover:underline md:no-underline md:hover:underline"
+          >
+            SolidTechnoID
+          </a>
+        </p>
+      </div>
+    </footer>
   );
 }

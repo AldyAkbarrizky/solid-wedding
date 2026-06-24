@@ -1,25 +1,44 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Inter } from "next/font/google";
+import {
+  Bebas_Neue,
+  Inter,
+  Montserrat,
+  Source_Serif_4,
+} from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
+const bebasNeue = Bebas_Neue({
+  variable: "--font-bebas-neue",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: "400",
+  display: "swap",
+});
+
+const sourceSerif = Source_Serif_4({
+  variable: "--font-source-serif-pro",
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
   style: ["normal", "italic"],
   display: "swap",
 });
 
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  weight: ["500", "600"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "Jim & Pam — June 18, 2027",
-  description:
-    "You're cordially invited to celebrate the story of Jim & Pam. Join us on June 18, 2027 in Vancouver, BC.",
+  title: "Afdal & Putri Wedding",
+  description: "Undangan pernikahan Afdal dan Putri.",
 };
 
 export default function RootLayout({
@@ -29,8 +48,8 @@ export default function RootLayout({
 }) {
   return (
     <html
-      lang="en"
-      className={`${inter.variable} ${cormorant.variable} h-full`}
+      lang="id"
+      className={`${montserrat.variable} ${bebasNeue.variable} ${sourceSerif.variable} ${inter.variable} h-full`}
     >
       <body className="min-h-full">{children}</body>
     </html>

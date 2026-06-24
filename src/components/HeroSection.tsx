@@ -1,233 +1,187 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "motion/react";
-import { useRef } from "react";
+import Image from "next/image";
+import { useState } from "react";
 
-const NAV_LINKS = ["Travel Logistics", "Registry", "FAQ"];
+const NAV_LINKS = [
+  { label: "Welcome", href: "#invitation" },
+  { label: "Our Story", href: "#story" },
+  { label: "Date", href: "#date" },
+  { label: "Location", href: "#venue" },
+  { label: "Memories", href: "#memories" },
+  { label: "Gift", href: "#gift" },
+];
 
 export function HeroSection() {
-  const containerRef = useRef<HTMLElement>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
-
-  // ── Main image: full-screen → center card (via inset transitions) ────────
-  // Starts at inset-0 (full screen), ends positioned below navbar with side margins
-  const imgTop = useTransform(scrollYProgress, [0, 0.5], ["0px", "76px"]);
-  const imgLeft = useTransform(scrollYProgress, [0, 0.5], ["0%", "24%"]);
-  const imgRight = useTransform(scrollYProgress, [0, 0.5], ["0%", "24%"]);
-  const imgBottom = useTransform(scrollYProgress, [0, 0.5], ["0px", "20px"]);
-  const imageRadius = useTransform(scrollYProgress, [0, 0.5], [0, 28]);
-
-  // ── Content inside image: fades out ────────────────────────────────────
-  const titleOpacity = useTransform(scrollYProgress, [0, 0.26], [1, 0]);
-  const titleY = useTransform(scrollYProgress, [0, 0.26], [0, -50]);
-  const scrollHintOpacity = useTransform(scrollYProgress, [0, 0.22], [1, 0]);
-
-  // ── Navbar: transparent overlay → floating white pill ──────────────────
-  const navBg = useTransform(
-    scrollYProgress,
-    [0, 0.32],
-    ["rgba(0,0,0,0)", "rgba(252,250,246,0.97)"],
-  );
-  const navRadius = useTransform(scrollYProgress, [0, 0.32], [0, 9999]);
-  const navMx = useTransform(scrollYProgress, [0, 0.32], [0, 16]);
-  const navMt = useTransform(scrollYProgress, [0, 0.32], [0, 12]);
-  const navShadow = useTransform(
-    scrollYProgress,
-    [0.1, 0.32],
-    ["0 0 0 0 rgba(0,0,0,0)", "0 2px 20px rgba(0,0,0,0.07)"],
-  );
-  const navTextColor = useTransform(
-    scrollYProgress,
-    [0.05, 0.28],
-    ["rgba(255,255,255,1)", "rgba(28,26,23,1)"],
-  );
-
-  // ── Side photos: fly in from off-screen ────────────────────────────────
-  const leftX = useTransform(scrollYProgress, [0.08, 0.55], [-480, 0]);
-  const rightX = useTransform(scrollYProgress, [0.08, 0.55], [480, 0]);
-  const sideOpacity = useTransform(scrollYProgress, [0.08, 0.48], [0, 1]);
+  const closeMenu = () => setMenuOpen(false);
 
   return (
-    <section ref={containerRef} className="relative h-[200vh]">
-      {/* ── Sticky viewport ─────────────────────────────────────────────── */}
-      <div className="sticky top-0 h-screen overflow-hidden isolate bg-[#f5f0e8]">
-        {/* ── Navbar ──────────────────────────────────────────────────── */}
-        <div className="absolute inset-x-0 top-0 z-50">
-          <motion.nav
-            style={{
-              background: navBg,
-              borderRadius: navRadius,
-              boxShadow: navShadow,
-              marginLeft: navMx,
-              marginRight: navMx,
-              marginTop: navMt,
-            }}
-            className="flex items-center justify-between px-6 py-4"
-          >
-            {/* Logo */}
-            <motion.span
-              style={{ color: navTextColor }}
-              className="font-serif text-xl italic font-semibold select-none"
+    <section
+      id="welcome"
+      className="relative isolate h-[100svh] min-h-[700px] overflow-hidden bg-neutral-950 text-white"
+    >
+      <Image
+        src="/Hero Background.png"
+        alt="Afdal dan Putri berdiri di tepi danau"
+        fill
+        priority
+        sizes="100vw"
+        className="absolute inset-0 z-0 object-cover object-center"
+      />
+
+      <div className="absolute inset-0 z-10 bg-black/20" />
+      <div className="absolute inset-x-0 top-0 z-10 h-[28%] bg-linear-to-b from-black/25 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 z-10 h-[32%] bg-linear-to-t from-black/45 to-transparent" />
+
+      {/* Mobile Menu Overlay */}
+      <div
+        className={`fixed inset-0 z-[60] flex flex-col items-center justify-center gap-10 bg-neutral-950/95 px-8 transition-all duration-300 md:hidden ${
+          menuOpen
+            ? "pointer-events-auto opacity-100"
+            : "pointer-events-none opacity-0"
+        }`}
+        aria-hidden={!menuOpen}
+      >
+        <button
+          type="button"
+          aria-label="Tutup navigasi"
+          onClick={closeMenu}
+          className="absolute right-6 top-7 flex h-10 w-10 items-center justify-center text-white"
+        >
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+            <path
+              d="M2 2L24 24M24 2L2 24"
+              stroke="currentColor"
+              strokeWidth="2.4"
+              strokeLinecap="round"
+            />
+          </svg>
+        </button>
+
+        <nav className="flex flex-col items-center gap-7 font-sans">
+          {NAV_LINKS.map((item) => (
+            <a
+              key={item.label}
+              href={item.href}
+              onClick={closeMenu}
+              className="text-[22px] font-normal leading-none text-white transition-opacity hover:opacity-75"
             >
-              J&amp;P
-            </motion.span>
-
-            {/* Nav links + CTA */}
-            <div className="flex items-center gap-5">
-              {NAV_LINKS.map((item) => (
-                <motion.a
-                  key={item}
-                  href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
-                  style={{ color: navTextColor }}
-                  className="hidden text-sm tracking-wide transition-opacity hover:opacity-70 md:block"
-                >
-                  {item}
-                </motion.a>
-              ))}
-              <motion.a
-                href="#rsvp"
-                className="rounded-full px-5 py-2.5 text-sm font-medium text-white transition"
-                style={{ backgroundColor: "rgba(120,90,50,1)" }}
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-              >
-                Submit RSVP
-              </motion.a>
-            </div>
-          </motion.nav>
-        </div>
-
-        {/* ── Left side photos (desktop only) ─────────────────────────── */}
-        <motion.div
-          style={{ x: leftX, opacity: sideOpacity }}
-          className="absolute left-3 top-[10%] z-0 hidden flex-col gap-4 md:flex lg:left-8"
-        >
-          {/* Top-left: warm landscape (beach/cliff) */}
-          <div
-            className="h-52 w-72 overflow-hidden rounded-3xl shadow-xl"
-            style={{
-              background:
-                "linear-gradient(160deg, #c9a455 0%, #a07840 35%, #704a20 70%, #503020 100%)",
-            }}
-          />
-          {/* Mid-left: monochrome (dancing couple) */}
-          <div
-            className="ml-8 h-44 w-60 overflow-hidden rounded-3xl shadow-xl"
-            style={{
-              background:
-                "linear-gradient(180deg, #7a7a7a 0%, #4a4a4a 45%, #252525 100%)",
-            }}
-          />
-        </motion.div>
-
-        {/* ── Right side photos (desktop only) ────────────────────────── */}
-        <motion.div
-          style={{ x: rightX, opacity: sideOpacity }}
-          className="absolute right-3 top-[18%] z-0 hidden flex-col gap-4 md:flex lg:right-8"
-        >
-          {/* Top-right: cool cliff faces */}
-          <div
-            className="ml-auto h-44 w-52 overflow-hidden rounded-3xl shadow-xl"
-            style={{
-              background:
-                "linear-gradient(180deg, #8090a8 0%, #506070 45%, #304050 100%)",
-            }}
-          />
-          {/* Bottom-right: earthy dark (feet/shoes) */}
-          <div
-            className="h-56 w-56 overflow-hidden rounded-3xl shadow-xl"
-            style={{
-              background:
-                "linear-gradient(160deg, #706858 0%, #4a4030 50%, #282018 100%)",
-            }}
-          />
-        </motion.div>
-
-        {/* ── Main image container ─────────────────────────────────────── */}
-        <motion.div
-          style={{
-            position: "absolute",
-            top: imgTop,
-            left: imgLeft,
-            right: imgRight,
-            bottom: imgBottom,
-            borderRadius: imageRadius,
-            overflow: "hidden",
-            zIndex: 10,
-          }}
-          className="shadow-2xl"
-        >
-          {/* Placeholder: sky → mountains → grass (landscape photo) */}
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(180deg, #7db8d8 0%, #90a8be 18%, #8a9aaa 32%, #6e8070 55%, #4a7048 75%, #3a5838 100%)",
-            }}
-          />
-
-          {/* Subtle vignette for text readability */}
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.08) 40%, rgba(0,0,0,0.25) 100%)",
-            }}
-          />
-
-          {/* ── Jim & Pam heading ── */}
-          <motion.div
-            style={{ opacity: titleOpacity, y: titleY }}
-            className="absolute bottom-16 left-8 right-4 md:bottom-24 md:left-12"
-          >
-            <h1 className="font-serif text-[68px] italic leading-none text-white drop-shadow-lg md:text-[100px] lg:text-[120px]">
-              Jim &amp; Pam
-            </h1>
-          </motion.div>
-
-          {/* ── Bottom bar with scroll hint ── */}
-          <motion.div
-            style={{ opacity: scrollHintOpacity }}
-            className="absolute bottom-0 left-0 right-0 border-t border-white/20 px-6 py-5 md:px-10"
-          >
-            <div className="flex items-center justify-between">
-              {/* Down arrow */}
-              <motion.div
-                animate={{ y: [0, 5, 0] }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              >
-                <svg
-                  width="14"
-                  height="22"
-                  viewBox="0 0 14 22"
-                  fill="none"
-                  className="text-white/50"
-                >
-                  <path
-                    d="M7 0v18M0.5 12l6.5 7 6.5-7"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </motion.div>
-              {/* Scroll hint text */}
-              <p className="text-[10px] uppercase tracking-[0.45em] text-white/55">
-                Scroll to explore
-              </p>
-            </div>
-          </motion.div>
-        </motion.div>
+              {item.label}
+            </a>
+          ))}
+        </nav>
       </div>
+
+      <header className="absolute inset-x-0 top-0 z-50 px-6 pt-7 sm:px-10 md:px-12 md:pt-10">
+        <nav className="mx-auto flex max-w-[1190px] items-center justify-between font-sans">
+          <a href="#welcome" aria-label="Afdal Putri Wedding" className="block">
+            <Image
+              src="/Logo Afput HD.png"
+              alt="Afput Wedding"
+              width={170}
+              height={72}
+              priority
+              className="h-auto w-[clamp(96px,20vw,146px)] md:w-[106px]"
+            />
+          </a>
+
+          <div className="hidden items-center gap-8 md:flex lg:gap-9">
+            {NAV_LINKS.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                className="text-[18px] font-normal leading-none text-white transition-opacity hover:opacity-75 lg:text-[19px]"
+              >
+                {item.label}
+              </a>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-[clamp(20px,5vw,34px)] md:gap-0">
+            <a
+              href="#rsvp"
+              className="rounded-[14px] border border-white/75 px-[clamp(18px,4vw,29px)] py-[clamp(10px,2vw,15px)] text-[clamp(15px,2.8vw,21px)] font-normal leading-none text-white transition-colors hover:bg-white hover:text-neutral-950 md:rounded-[9px] md:px-6 md:py-3 md:text-[17px]"
+            >
+              Kehadiran
+            </a>
+
+            <button
+              type="button"
+              aria-label="Buka navigasi"
+              onClick={() => setMenuOpen(true)}
+              className="flex h-10 w-10 items-center justify-center text-white md:hidden"
+            >
+              <svg width="22" height="16" viewBox="0 0 22 16" fill="none">
+                <path
+                  d="M1 2H21M1 8H21M1 14H21"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </button>
+          </div>
+        </nav>
+      </header>
+
+      <h1
+        aria-label="Afdal Putri"
+        className="absolute inset-x-0 top-[13.5%] z-20 flex flex-col items-center gap-0 px-8 font-display text-[clamp(7rem,27.5vw,12.5rem)] leading-[0.88] text-white md:top-[37.4%] md:flex-row md:justify-between md:pl-[12.6vw] md:pr-[15.1vw] md:text-[clamp(10rem,15.4vw,15.4rem)] md:leading-[0.78]"
+      >
+        <span className="-translate-x-[8.5vw] origin-left scale-x-90 md:translate-x-0 md:scale-x-100">
+          AFDAL
+        </span>
+        <span className="translate-x-[12vw] md:translate-x-0">PUTRI</span>
+      </h1>
+
+      <Image
+        src="/Love.svg"
+        alt=""
+        width={187}
+        height={155}
+        unoptimized
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-[38%] z-30 w-[70vw] max-w-[520px] -translate-x-1/2 md:top-[29%] md:w-[15vw] md:min-w-[190px] md:max-w-[245px]"
+      />
+
+      <Image
+        src="/Afdan dan Putri.png"
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-40 object-cover object-center"
+      />
+
+      <a
+        href="#story"
+        className="absolute inset-x-0 bottom-0 z-50 border-t border-white/45"
+      >
+        <div className="mx-auto flex h-[9.25svh] min-h-[76px] max-w-[1240px] items-center justify-between px-8 text-white sm:px-12 md:h-24 md:px-8">
+          <svg
+            width="28"
+            height="38"
+            viewBox="0 0 28 38"
+            fill="none"
+            className="h-[24px] w-[18px] shrink-0 text-white md:h-[28px] md:w-5"
+            aria-hidden="true"
+          >
+            <path
+              d="M14 1V35M2 24L14 36L26 24"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          <span className="text-[clamp(0.95rem,3vw,1.3rem)] font-normal leading-none md:text-[18px]">
+            Jelajahi Kisah Kami
+          </span>
+        </div>
+      </a>
     </section>
   );
 }

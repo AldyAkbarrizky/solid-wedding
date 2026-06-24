@@ -37,7 +37,7 @@ const details = [
 
 export function DetailsSection() {
   return (
-    <section className="bg-[#f5f0e8] px-6 py-32 md:px-16">
+    <section id="details" className="bg-[#f5f0e8] px-6 py-32 md:px-16">
       <div className="mx-auto max-w-6xl">
         {/* Header */}
         <motion.div
