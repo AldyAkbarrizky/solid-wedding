@@ -42,3 +42,300 @@ body {
         var(--font-source-serif-pro), "Source Serif 4", "Source Serif Pro",
         Georgia, "Times New Roman", serif;
 }
+
+#story .story-image-stage {
+    aspect-ratio: 1 / 1;
+    width: min(42vw, 582px);
+    height: min(42vw, 582px);
+    flex: none;
+}
+
+@media (min-width: 2000px) {
+    #welcome header nav {
+        max-width: 1680px;
+    }
+
+    #welcome header nav > a img {
+        width: 142px;
+    }
+
+    #welcome header nav > div:nth-of-type(1) {
+        gap: 3rem;
+    }
+
+    #welcome header nav > div:nth-of-type(1) a {
+        font-size: 22px;
+    }
+
+    #welcome header nav > div:nth-of-type(2) > a {
+        padding: 16px 32px;
+        font-size: 21px;
+    }
+
+    #welcome h1 {
+        font-size: 19rem;
+    }
+
+    #welcome > a > div {
+        max-width: 1720px;
+        height: 128px;
+    }
+
+    #welcome > a svg {
+        width: 26px;
+        height: 36px;
+    }
+
+    #welcome > a span {
+        font-size: 24px;
+    }
+
+    #invitation {
+        padding-top: 128px;
+        padding-bottom: 128px;
+    }
+
+    #invitation > div {
+        max-width: 1520px;
+    }
+
+    #invitation > div > img:first-child {
+        width: 390px;
+    }
+
+    #invitation h2 {
+        margin-top: 40px;
+        max-width: 1120px;
+        font-size: 46px;
+    }
+
+    #invitation > div > div:nth-of-type(2) {
+        margin-top: 80px;
+        max-width: 1320px;
+    }
+
+    #invitation > div > p:nth-of-type(1) {
+        margin-top: 48px;
+        max-width: 1120px;
+        font-size: 19px;
+    }
+
+    #invitation > div > div:nth-of-type(3) {
+        margin-top: 112px;
+    }
+
+    #invitation > div > p:nth-of-type(2) {
+        font-size: 14px;
+    }
+
+    #invitation > div > div:nth-of-type(4) {
+        max-width: 1420px;
+        gap: 80px;
+    }
+
+    #invitation article {
+        max-width: 650px;
+        grid-template-columns: 190px 1fr;
+        gap: 28px;
+        padding: 20px;
+    }
+
+    #invitation article h3 {
+        font-size: 28px;
+    }
+
+    #invitation article h3 + p {
+        font-size: 17px;
+    }
+
+    #story .story-sticky {
+        padding-right: 12vw;
+        padding-left: 12vw;
+    }
+
+    #story .story-grid {
+        grid-template-columns: minmax(0, 700px) minmax(0, 720px);
+        gap: 112px;
+    }
+
+    #story .story-label {
+        margin-bottom: 28px;
+        font-size: 18px;
+        line-height: 26px;
+    }
+
+    #story .story-title {
+        margin-bottom: 40px;
+        font-size: 86px;
+    }
+
+    #story .story-body {
+        max-width: 700px;
+        font-size: 22px;
+        line-height: 38px;
+    }
+
+    #story .story-image-stage {
+        width: min(34vw, 720px);
+        height: min(34vw, 720px);
+        max-width: 720px;
+    }
+
+    #date > div {
+        max-width: 1320px;
+        transform: translateY(0);
+    }
+
+    #date > div > p:nth-of-type(1) {
+        margin-top: 80px;
+        font-size: 22px;
+        line-height: 30px;
+    }
+
+    #date > div > p:nth-of-type(2) {
+        margin-top: 64px;
+        font-size: 132px;
+    }
+
+    #date > div > div:last-child {
+        max-width: 740px;
+        gap: 28px;
+    }
+
+    #date > div > div:last-child span:first-child {
+        font-size: 42px;
+        line-height: 50px;
+    }
+
+    #date > div > div:last-child span:last-child {
+        margin-top: 8px;
+        font-size: 12px;
+        line-height: 18px;
+    }
+
+    #venue {
+        display: flex;
+        min-height: 100svh;
+        align-items: center;
+    }
+
+    #venue > div {
+        max-width: 1600px;
+        gap: 112px;
+    }
+
+    #venue > div > div:first-child {
+        max-width: 720px;
+    }
+
+    #venue > div > div:last-child {
+        max-width: 740px;
+    }
+
+    #venue h2 {
+        margin-top: 44px;
+        font-size: 86px;
+    }
+
+    #venue h2 + div + p {
+        max-width: 720px;
+        font-size: 20px;
+        line-height: 34px;
+    }
+
+    #venue h2 + div + p + div {
+        margin-top: 40px;
+        gap: 32px;
+    }
+
+    #venue h2 + div + p + div > div {
+        min-height: 190px;
+    }
+
+    #venue h2 + div + p + div p:first-child {
+        font-size: 23px;
+        line-height: 34px;
+    }
+
+    #venue h2 + div + p + div p:last-child {
+        font-size: 20px;
+        line-height: 30px;
+    }
+
+    #venue a {
+        width: 260px;
+        height: 70px;
+        margin-top: 40px;
+        font-size: 20px;
+    }
+
+    #memories > div {
+        max-width: 1264px;
+    }
+
+    #memories > div > p {
+        font-size: 17px;
+    }
+
+    #memories h2 {
+        margin-top: 32px;
+        font-size: 62px;
+    }
+
+    #memories h2 + div {
+        width: 64px;
+        margin-top: 40px;
+    }
+
+    #memories div.grid {
+        grid-template-columns: repeat(4, 304px);
+        gap: 16px;
+        margin-top: 64px;
+    }
+
+    #memories button[aria-label^="Perbesar"] {
+        height: 368px;
+    }
+
+    #rsvp > div {
+        max-width: 1580px;
+        gap: 84px;
+        transform: scale(1.18);
+        transform-origin: center;
+    }
+
+    #gift > div {
+        max-width: 1420px;
+        transform: scale(1.18);
+        transform-origin: center;
+    }
+
+    footer div.relative.z-20 > p:first-child {
+        font-size: 19px;
+        line-height: 28px;
+    }
+
+    footer div.relative.z-20 > p:nth-of-type(2) {
+        max-width: 1560px;
+        margin-top: 56px;
+        font-size: 58px;
+    }
+
+    footer div.relative.z-20 > div {
+        height: 112px;
+        margin-top: 64px;
+    }
+
+    footer div.relative.z-20 > p:nth-of-type(3) {
+        margin-top: 64px;
+        font-size: 108px;
+    }
+
+    footer > div:last-child {
+        height: 96px;
+    }
+
+    footer > div:last-child p {
+        font-size: 24px;
+    }
+}

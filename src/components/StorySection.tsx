@@ -47,6 +47,53 @@ const chapters = [
   },
 ];
 
+function ChapterIndicators({ activeIndex }: { activeIndex: number }) {
+  return (
+    <div className="flex gap-2">
+      {chapters.map((_, index) => (
+        <div
+          key={index}
+          className={`h-px transition-all duration-500 ${
+            index === activeIndex ? "w-12 bg-[#9A2F2F]" : "w-5 bg-[#ead8d4]"
+          }`}
+        />
+      ))}
+    </div>
+  );
+}
+
+function StoryImages({
+  chapter,
+  sizes,
+}: {
+  chapter: (typeof chapters)[number];
+  sizes: string;
+}) {
+  const isGrid = chapter.images.length > 1;
+
+  return (
+    <div
+      className={
+        isGrid
+          ? "grid h-full w-full grid-cols-2 grid-rows-2 gap-2 md:gap-3"
+          : "h-full w-full"
+      }
+    >
+      {chapter.images.map((src, index) => (
+        <div key={src} className="relative h-full w-full overflow-hidden">
+          <Image
+            src={src}
+            alt={`${chapter.title} ${index + 1}`}
+            fill
+            sizes={sizes}
+            className="object-cover"
+          />
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export function StorySection() {
   const containerRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
@@ -159,75 +206,54 @@ export function StorySection() {
       ref={containerRef}
       className="relative h-[300vh] bg-[#fbfaf7]"
     >
-      <div className="sticky top-0 flex h-screen items-center overflow-hidden px-6 py-16 md:px-16">
-        <div className="w-full">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:items-center">
+      <div className="story-sticky sticky top-0 flex h-[100svh] items-start overflow-hidden px-0 py-0 md:h-screen md:items-center md:px-16 md:py-16">
+        <div className="story-shell w-full">
+          <div className="story-grid relative h-[100svh] md:grid md:h-auto md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-center md:gap-10 lg:grid-cols-[minmax(0,540px)_minmax(0,582px)] lg:justify-center lg:gap-[92px] xl:gap-[110px]">
             {/* Text column */}
-            <div className="relative h-[calc(100svh-8rem)] md:h-[65vh]">
+            <div className="story-text-column relative z-10 h-[calc(100svh-100vw)] overflow-hidden md:h-[65vh]">
               {chapters.map((chapter, i) => (
                 <motion.div
                   key={chapter.title}
                   style={{ opacity: opacities[i], y: yValues[i] }}
-                  className="absolute inset-0 flex flex-col justify-center"
+                  className="absolute inset-0 flex flex-col justify-center px-6 py-4 md:justify-center md:px-0 md:py-0"
                 >
-                  <p className="mb-3 font-sans text-[14px] font-normal uppercase leading-[20px] tracking-[1.2px] text-neutral-400">
+                  <p className="story-label mb-2 font-sans text-[10px] font-normal uppercase leading-[14px] tracking-[2px] text-[#a18f8b] md:mb-5 md:text-[15px] md:leading-[22px] md:tracking-[2.5px]">
                     {chapter.label}
                   </p>
-                  <h3 className="mb-5 font-serif text-[32px] font-semibold leading-none tracking-normal text-[#4A0E0E] md:text-[40px]">
+                  <h3 className="story-title mb-3 font-serif text-[30px] font-semibold leading-[1] tracking-normal text-[#4A0E0E] max-[360px]:text-[27px] md:mb-9 md:text-[56px] md:leading-[1.1] lg:text-[72px]">
                     {chapter.title}
                   </h3>
-                  <p className="max-w-[540px] font-sans text-[14px] font-normal leading-[24px] text-neutral-600 md:text-[16px] md:leading-[28px]">
+                  <p className="story-body max-w-[540px] font-sans text-[12px] font-normal leading-[18px] text-[#6f625f] max-[360px]:text-[11px] max-[360px]:leading-[16px] md:text-[18px] md:leading-[32px] lg:text-[21px] lg:leading-[36px]">
                     {chapter.body}
                   </p>
-                  <div
-                    className={`mt-6 md:hidden ${
-                      chapter.images.length > 1
-                        ? "grid grid-cols-2 gap-2"
-                        : "mx-auto w-full max-w-[320px]"
-                    }`}
-                  >
-                    {chapter.images.map((src, idx) => (
-                      <div
-                        key={src}
-                        className={`relative overflow-hidden bg-[#fbfaf7] ${
-                          chapter.images.length > 1
-                            ? "aspect-[4/5]"
-                            : "h-[min(30svh,250px)]"
-                        }`}
-                      >
-                        <Image
-                          src={src}
-                          alt={`${chapter.title} ${idx + 1}`}
-                          fill
-                          sizes="100vw"
-                          className={
-                            chapter.images.length > 1
-                              ? "object-cover"
-                              : "object-contain"
-                          }
-                        />
-                      </div>
-                    ))}
-                  </div>
                   {/* Chapter indicators */}
-                  <div className="mt-7 flex gap-2 md:mt-10">
-                    {chapters.map((_, j) => (
-                      <div
-                        key={j}
-                        className={`h-px transition-all duration-500 ${
-                          j === i ? "w-10 bg-neutral-950" : "w-4 bg-neutral-300"
-                        }`}
-                      />
-                    ))}
+                  <div className="mt-4 md:mt-24">
+                    <ChapterIndicators activeIndex={i} />
                   </div>
                 </motion.div>
               ))}
             </div>
 
+            {/* Image stage — mobile only */}
+            <div className="story-mobile-image-stage absolute bottom-0 left-0 aspect-square w-screen overflow-hidden bg-[#fbfaf7] md:hidden">
+              {chapters.map((chapter, i) => (
+                <motion.div
+                  key={chapter.title}
+                  initial={{ opacity: 0 }}
+                  style={{
+                    opacity: imgOpacities[i],
+                    zIndex: chapters.length - i,
+                  }}
+                  className="absolute inset-0"
+                >
+                  <StoryImages chapter={chapter} sizes="100vw" />
+                </motion.div>
+              ))}
+            </div>
+
             {/* Image column — desktop only */}
-            <div className="relative hidden h-[75vh] overflow-hidden bg-[#fbfaf7] md:block">
+            <div className="story-image-stage relative hidden justify-self-center overflow-hidden bg-[#fbfaf7] md:block">
               {chapters.map((chapter, i) => {
-                const isGrid = chapter.images.length > 1;
                 return (
                   <motion.div
                     key={chapter.title}
@@ -236,26 +262,12 @@ export function StorySection() {
                       opacity: imgOpacities[i],
                       zIndex: chapters.length - i,
                     }}
-                    className={`absolute inset-0 ${
-                      isGrid ? "grid grid-cols-2 grid-rows-2 gap-3" : ""
-                    }`}
+                    className="absolute inset-0"
                   >
-                    {chapter.images.map((src, idx) => (
-                      <div
-                        key={idx}
-                        className={`relative overflow-hidden ${
-                          isGrid ? "" : "h-full w-full"
-                        }`}
-                      >
-                        <Image
-                          src={src}
-                          alt={`${chapter.title} ${idx + 1}`}
-                          fill
-                          sizes="(min-width: 768px) 50vw, 100vw"
-                          className={isGrid ? "object-cover" : "object-contain"}
-                        />
-                      </div>
-                    ))}
+                    <StoryImages
+                      chapter={chapter}
+                      sizes="(min-width: 2000px) 720px, (min-width: 1024px) 582px, 50vw"
+                    />
                   </motion.div>
                 );
               })}
