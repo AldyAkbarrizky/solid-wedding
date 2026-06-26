@@ -34,7 +34,7 @@ export async function WeddingPage({ invitationSlug }: WeddingPageProps) {
   try {
     [invitation, reservations, stats] = await Promise.all([
       getActiveInvitationBySlug(invitationSlug),
-      getPublicReservations(8),
+      getPublicReservations(100),
       getReservationStats(),
     ]);
   } catch {

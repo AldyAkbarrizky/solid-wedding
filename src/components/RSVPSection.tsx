@@ -36,7 +36,13 @@ function LocationIcon() {
         stroke="currentColor"
         strokeWidth="1.5"
       />
-      <circle cx="8" cy="5.9" r="1.45" stroke="currentColor" strokeWidth="1.5" />
+      <circle
+        cx="8"
+        cy="5.9"
+        r="1.45"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
     </svg>
   );
 }
@@ -65,13 +71,24 @@ export function RSVPSection({
   const [location, setLocation] = useState("");
   const [message, setMessage] = useState("");
   const [wishes, setWishes] = useState<ReservationRecord[]>(initialWishes);
-  const [attendanceCount, setAttendanceCount] = useState(initialAttendanceCount);
-  const [reservationCount, setReservationCount] = useState(initialReservationCount);
+  const [attendanceCount, setAttendanceCount] = useState(
+    initialAttendanceCount,
+  );
+  const [reservationCount, setReservationCount] = useState(
+    initialReservationCount,
+  );
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [statusMessage, setStatusMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const visibleWishes = useMemo(() => wishes.slice(0, 6), [wishes]);
+  const [page, setPage] = useState(1);
+  const pageSize = 5;
+  const totalPages = Math.max(1, Math.ceil(wishes.length / pageSize));
+
+  const visibleWishes = useMemo(
+    () => wishes.slice((page - 1) * pageSize, page * pageSize),
+    [wishes, page],
+  );
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -103,6 +120,7 @@ export function RSVPSection({
       const reservation = result.reservation as ReservationRecord;
       setWishes((current) => [reservation, ...current]);
       setReservationCount((current) => current + 1);
+      setPage(1);
       if (reservation.attendance === "Hadir") {
         setAttendanceCount((current) => current + 1);
       }
@@ -275,6 +293,30 @@ export function RSVPSection({
             <p className="mt-5 rounded-[14px] bg-white px-5 py-4 font-sans text-[14px] font-semibold leading-[22px] text-[#6F6B75] shadow-[0_4px_18px_rgba(31,28,11,0.05)]">
               Belum ada ucapan.
             </p>
+          )}
+
+          {totalPages > 1 && (
+            <div className="mt-6 flex items-center justify-center gap-2">
+              <button
+                type="button"
+                disabled={page <= 1}
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+                className="inline-flex h-9 items-center rounded-[8px] border border-[#DED8CF] px-3 font-sans text-[12px] font-semibold text-[#6F625A] transition hover:bg-[#F3F1F0] disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                Sebelumnya
+              </button>
+              <span className="px-3 font-sans text-[13px] font-semibold text-[#6F625A]">
+                {page} / {totalPages}
+              </span>
+              <button
+                type="button"
+                disabled={page >= totalPages}
+                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                className="inline-flex h-9 items-center rounded-[8px] border border-[#DED8CF] px-3 font-sans text-[12px] font-semibold text-[#6F625A] transition hover:bg-[#F3F1F0] disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                Selanjutnya
+              </button>
+            </div>
           )}
         </div>
       </div>
