@@ -227,11 +227,28 @@ export function StorySection() {
                     {chapter.body}
                   </p>
                   {/* Chapter indicators */}
-                  <div className="mt-4 md:mt-24">
+                  <div className="hidden md:mt-24 md:block">
                     <ChapterIndicators activeIndex={i} />
                   </div>
                 </motion.div>
               ))}
+
+              <div
+                className="pointer-events-none absolute bottom-5 left-6 z-20 md:hidden"
+                aria-hidden="true"
+              >
+                <div className="relative h-px w-[148px]">
+                  {chapters.map((chapter, i) => (
+                    <motion.div
+                      key={chapter.title}
+                      style={{ opacity: opacities[i] }}
+                      className="absolute inset-0"
+                    >
+                      <ChapterIndicators activeIndex={i} />
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
             </div>
 
             {/* Image stage — mobile only */}

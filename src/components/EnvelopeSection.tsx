@@ -138,7 +138,7 @@ export function EnvelopeSection() {
           type="button"
           aria-label={isPlaying ? "Hentikan musik" : "Putar musik"}
           onClick={toggleMusic}
-          className="fixed bottom-24 right-6 z-50 transition hover:scale-105 md:bottom-8 md:right-8"
+          className="fixed bottom-6 right-6 z-50 transition hover:scale-105 md:bottom-8 md:right-8"
         >
           <Image
             src={isPlaying ? "/MusicActive.svg" : "/MusicInactive.svg"}

@@ -1,9 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const YOUTUBE_EMBED_URL = "https://www.youtube-nocookie.com/embed/IUpgqxPePvg";
+const YOUTUBE_AUTOPLAY_PARAMS = "autoplay=1&rel=0&modestbranding=1&mute=1&playsinline=1";
 
 const quranText =
   "Di antara tanda-tanda (kebesaran)-Nya ialah bahwa Dia menciptakan pasangan-pasangan untukmu dari (jenis) dirimu sendiri agar kamu merasa tenteram kepadanya. Dia menjadikan di antaramu rasa cinta dan kasih sayang. Sesungguhnya pada yang demikian itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berpikir. (Q.S Ar-Rum ayat 21)";
@@ -46,7 +47,38 @@ function InstagramIcon() {
 }
 
 export function InvitationSection() {
+  const videoRef = useRef<HTMLDivElement>(null);
   const [videoOpen, setVideoOpen] = useState(false);
+
+  useEffect(() => {
+    const videoElement = videoRef.current;
+
+    if (!videoElement || videoOpen) {
+      return;
+    }
+
+    if (!("IntersectionObserver" in window)) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) {
+          return;
+        }
+
+        setVideoOpen(true);
+        observer.disconnect();
+      },
+      {
+        threshold: 0.35,
+      },
+    );
+
+    observer.observe(videoElement);
+
+    return () => observer.disconnect();
+  }, [videoOpen]);
 
   return (
     <section
@@ -77,12 +109,15 @@ export function InvitationSection() {
 
         <div className="mx-auto mt-8 h-px w-9 bg-[#ead8d4] md:mt-10" />
 
-        <div className="mx-auto mt-14 max-w-[520px] sm:mt-10 md:mt-16 md:max-w-[1040px]">
+        <div
+          ref={videoRef}
+          className="mx-auto mt-14 max-w-[520px] sm:mt-10 md:mt-16 md:max-w-[1040px]"
+        >
           <div className="relative aspect-video w-full overflow-hidden bg-[#15110f]">
             {videoOpen ? (
               <iframe
                 title="Video Afdal dan Putri"
-                src={`${YOUTUBE_EMBED_URL}?autoplay=1&rel=0&modestbranding=1&mute=1`}
+                src={`${YOUTUBE_EMBED_URL}?${YOUTUBE_AUTOPLAY_PARAMS}`}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
                 className="absolute inset-0 h-full w-full"
